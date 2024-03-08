@@ -1,0 +1,23 @@
+{
+  //正式环境
+//  "app": {
+//    "bundleName": "ls.yylx.testharmonyos",
+//    "vendor": "正式",
+//    "versionCode": 1000000,
+//    "versionName": "1.0.0",
+//    "icon": "$media:app_icon",
+//    "label": "$string:app_name"
+//  },
+
+  //测试环境
+  "app": {
+    "bundleName": "ls.yylx.testharmonyos.test",
+    "vendor": "测试",
+    "versionCode": 1000000,
+    "versionName": "1.0.0",
+    "icon": "$media:app_icon",
+    "label": "$string:test_app_name"
+  }
+
+
+}

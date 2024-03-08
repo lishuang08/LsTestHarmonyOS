@@ -1,0 +1,19 @@
+{
+  "apiType": "stageMode",
+  "buildOption": {
+//    "externalNativeOptions": {
+//      "abiFilters": [
+//        "x86_64"
+//      ]
+//    }
+  },
+  "targets": [
+    {
+      "name": "default",
+      "runtimeOS": "HarmonyOS"
+    },
+    {
+      "name": "ohosTest",
+    }
+  ]
+}

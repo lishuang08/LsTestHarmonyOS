@@ -2,6 +2,7 @@ import router from '@ohos.router';
 import CopyrightComponent from '../view/CopyrightComponent';
 import { CommonConstants } from '../constants/CommonConstants';
 
+@Preview
 @Entry
 @Component
 struct SplashScreenPage {

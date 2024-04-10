@@ -11,7 +11,7 @@
 
   //测试环境
   "app": {
-    "bundleName": "ls.yylx.testharmonyos.test",
+    "bundleName": "ls.yylx.testos",
     "vendor": "测试",
     "versionCode": 1000000,
     "versionName": "1.0.0",

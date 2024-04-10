@@ -5,6 +5,7 @@
     "pages/GuidePage",
     "pages/DetailPage",
     "pages/CanvasPage",
-    "pages/WebPage"
+    "pages/WebPage",
+    "pages/Index"
   ]
 }

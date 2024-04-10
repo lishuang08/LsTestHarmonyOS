@@ -8,10 +8,18 @@ import { GlobalContext } from '../util/GlobalContext';
 import PreferencesUtil from '../util/PreferencesUtil';
 
 
-
-
 export default class EntryAbility extends UIAbility {
+  private nums = ["1", 1, "3", false]
+
+
+
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
+
+    this.context.eventHub.emit("接收", "aaa")
+
+    globalThis.globalDataShare  = "aaa";
+
+
     Logger.info('%{public}s', 'Ability onCreate');
 
     GlobalContext.getContext().setObject('abilityWant', want);
@@ -19,15 +27,39 @@ export default class EntryAbility extends UIAbility {
     PreferencesUtil.createPreferences(this.context);
 
     PreferencesUtil.getStringData("uuid").then((value) => {
-      if (value  == "") {
+
+
+      if (value == "") {
         let uuid = util.generateRandomUUID(true)
         PreferencesUtil.saveStringData(uuid, "uuid");
         Logger.debug("new uuid :" + uuid)
-      }else {
+      } else {
         Logger.debug("old uuid :" + value)
       }
     });
 
+
+
+
+    let l = "aaa"
+    l = "222"
+
+    var v = "bbb"
+    v = "111"
+
+
+    Logger.error("v  1: " + v)
+    Logger.error("l  1: " + l)
+    this.nums.forEach(element => {
+      if (element) {
+        var v = "ccc"
+        let l = "333"
+
+        Logger.error("v  2: " + v)
+        Logger.error("l  2: " + l)
+
+      }
+    })
   }
 
   onDestroy(): void {

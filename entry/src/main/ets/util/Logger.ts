@@ -1,7 +1,7 @@
 
 import hilog from '@ohos.hilog';
 
-const LOGGER_PREFIX: string = 'xcyharmony';
+const LOGGER_PREFIX: string = 'lstestos';
 
 class Logger {
   private domain: number;

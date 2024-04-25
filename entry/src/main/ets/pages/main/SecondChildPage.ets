@@ -1,4 +1,4 @@
-import Logger from '../../util/Logger';
+import { XLog } from  '@ohos-port/xlog';
 import { TabItemData } from '../../dataclass/TabItemData';
 
 
@@ -8,7 +8,7 @@ export struct SecondChildPage {
   private url: string = ''
 
   aboutToAppear() {
-    Logger.info("this.url " + this.url)
+    XLog.i("this.url " + this.url)
   }
 
   build() {

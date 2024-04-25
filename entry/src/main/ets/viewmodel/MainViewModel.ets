@@ -1,29 +1,41 @@
 import { ListData } from '../dataclass/ListData';
-import { httpRequestGet } from '../network/HttpGet';
 import { ServerDataBack } from '../network/ServerDataBack';
 import { ListDataSource } from './datasource/ListDataSource';
 
-class  MainViewModel{
+import singleAxios from '../network/AxiosUtils'
+import { XLog } from '@ohos-port/xlog';
+import { AxiosError, AxiosResponse } from '@ohos/axios';
+import { CatBreedData } from '../dataclass/CatBreedData';
 
+class MainViewModel {
+  public dataSource = new ListDataSource()
 
-  getListData( listDataSource :ListDataSource , getListSuccess: boolean )  {
+  getListData() {
+    // 发送get请求
+    singleAxios.instance
+      .get<string, AxiosResponse<Array<CatBreedData>>, null>("/breeds?limit=10&page=0")
+      .then((response: AxiosResponse) => {
+        XLog.i("result:" + JSON.stringify(response.data));
 
+        let result: Array<CatBreedData> = response.data
+        // getListSuccess = true
+        if (response.status == 200) {
+          this.dataSource.pushData(result)
+        } else {
+          // resolve(Const.TabBars_DEFAULT_NEWS_TYPES);
+        }
+        // Logger.error(getListSuccess + " ")
+      })
+      .catch((error: AxiosError) => {
+        XLog.e("result:" + error.message);
+        // getListSuccess = false
+      })
+      .then(() => {
+        //最终执行
 
-    let url = "https://jsonplaceholder.typicode.com/posts"
-    httpRequestGet(url).then((data: ServerDataBack) => {
-      let result: Array<ListData> = JSON.parse(`${data.data}`)
-      listDataSource.pushData(result)
+      })
 
-      getListSuccess = true
-      // if (data.success) {
-      //
-      // } else {
-      //   // resolve(Const.TabBars_DEFAULT_NEWS_TYPES);
-      // }
-    }).catch(() => {
-      getListSuccess = false
-    });
-  };
+  }
 }
 
 let mainViewModel = new MainViewModel();

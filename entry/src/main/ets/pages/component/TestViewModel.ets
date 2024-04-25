@@ -1,19 +1,19 @@
 import { CommonConstants } from '../../constants/CommonConstants';
 import router from '@ohos.router';
+import Logger from '../../util/Logger';
 import { TabItemData } from '../../dataclass/TabItemData';
 import { CatData } from '../../dataclass/CatData';
 import { ListData } from '../../dataclass/ListData';
-import { XLog } from  '@ohos-port/xlog';
 
 @Component
-export struct MainChildItem {
- @State item: ListData = new  ListData()
+export struct TestViewModel {
+  @State item: ListData = new  ListData()
 
   constructor(data: ListData) {
     super();
     this.item = data
 
-    XLog.i("aaa " +data.title)
+    Logger.info("aaa " +data.title)
   }
 
   aboutToAppear() {

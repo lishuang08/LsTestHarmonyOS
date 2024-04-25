@@ -6,6 +6,8 @@
     "pages/DetailPage",
     "pages/CanvasPage",
     "pages/WebPage",
-    "pages/Index"
+    "pages/Index",
+    "pages/Page333",
+    "pages/navigation/MainNavPage"
   ]
 }

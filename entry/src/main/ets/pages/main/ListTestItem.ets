@@ -7,6 +7,11 @@ export struct ListTestItem {
   aboutToAppear() {
   }
 
+
+  aboutToDisappear(): void {
+  }
+ 
+
   build() {
     List() {
       ForEach(this.items, (item: string) => {

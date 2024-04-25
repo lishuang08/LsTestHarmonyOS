@@ -1,22 +1,7 @@
 @Entry
 @Component
-struct Index {
-  @State message: string = 'Hello World';
-
-
-  aboutToAppear(): void {
-  }
-
-  aboutToDisappear(): void {
-  }
-
-  onPageShow(): void {
-  }
-  onPageHide(): void {
-  }
-  onBackPress(): void {
-  }
-
+struct Page333 {
+  @State message: string = 'Hello World'
 
   build() {
     Row() {

@@ -1,7 +1,7 @@
 import { ListData } from '../../dataclass/ListData';
-import Logger from '../../util/Logger';
 import { BasicDataSource } from './BasicDataSource';
 import { CatData } from '../../dataclass/CatData';
+import { XLog } from '@ohos-port/xlog';
 
 /**list数据source
  * */
@@ -19,7 +19,7 @@ export class CatDataSource extends BasicDataSource {
   public pushData(newList: Array<CatData>): void {
     // if (this.listData.length < MAX_DATA_LENGTH) {
     // this.listData = [...this.listData, ...goodsInitialList];
-    Logger.info("" + newList)
+    XLog.i("" + newList)
     this.list = newList
     this.notifyDataReload()
     // }

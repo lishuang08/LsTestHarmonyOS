@@ -3,4 +3,6 @@ export class CatData {
   width: number = 0
   height: number = 0
   url: string = ""
+
+
 }

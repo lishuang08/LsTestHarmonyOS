@@ -9,12 +9,13 @@ import PageViewModel from '../viewmodel/PageViewModel';
  */
 @Component
 export struct ListAreaComponent {
-
+  private source = PageViewModel.getListDataSource()
 
   build() {
     Column() {
       List() {
-        LazyForEach(PageViewModel.getListDataSource(), (item: DataItem) => {
+
+        LazyForEach(this.source, (item: DataItem) => {
           ListItem() {
             ListItemComponent({ itemInfo: item })
           }

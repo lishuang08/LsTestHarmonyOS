@@ -1,12 +1,14 @@
 import { CommonConstants } from '../constants/CommonConstants';
-import { httpRequestGet } from '../network/HttpGet';
 import { ServerDataBack } from '../network/ServerDataBack';
-import Logger from '../util/Logger';
 import { CatData } from '../dataclass/CatData';
 import { CatDataSource } from '../viewmodel/datasource/CatDataSource';
 import { ListData } from '../dataclass/ListData';
 import startAppViewModel from '../viewmodel/StartAppViewModel';
 import router from '@ohos.router';
+import axios, { AxiosError, AxiosResponse } from '@ohos/axios';
+import url from '@ohos.url';
+import { XLog } from '@ohos-port/xlog';
+import singleAxios from '../network/AxiosUtils'
 
 
 @Entry
@@ -26,7 +28,6 @@ struct GuidePage {
               .width('100%')
               .height('100%')
               .onClick(() => {
-
                 router.replaceUrl({
                   url: CommonConstants.MAIN_PAGE_URL
                 });
@@ -47,7 +48,7 @@ struct GuidePage {
   }
 
   aboutToAppear() {
-    Logger.debug("aboutToAppear  aaaa")
+    XLog.d("aboutToAppear  aaaa")
     // 请求服务端新闻数据
     this.getStartAppData()
   }
@@ -56,25 +57,33 @@ struct GuidePage {
 
     // let url = "https://jsonplaceholder.typicode.com/posts"
 
-    let catUrl = "https://api.thecatapi.com/v1/images/search?limit=10"
+    // let catUrl = "/images/search?limit=10"
 
-    httpRequestGet(catUrl).then((data: ServerDataBack) => {
+    singleAxios.instance
+      .get<string, AxiosResponse<Array<CatData>>, null>("/images/search?limit=3")
+      .then((response: AxiosResponse) => {
+        XLog.i("result:" + response.data);
+        let result: Array<CatData> = response.data
 
-      let result: Array<CatData> = JSON.parse(`${data.data}`)
+        XLog.d(result.toString())
 
-      Logger.debug(result.toString())
+        this.list = result
+        // this.dataSource.pushData(result)
+        // if (data.success) {
+        //
+        // } else {
+        //   // resolve(Const.TabBars_DEFAULT_NEWS_TYPES);
+        // }
+        this.getSuccess = true
+      })
+      .catch((error: AxiosError) => {
+        XLog.e("result:" + error.message);
+        this.getSuccess = false
+      })
+      .then(() => {
+        //最终执行
 
-      this.list = result
-      // this.dataSource.pushData(result)
-      // if (data.success) {
-      //
-      // } else {
-      //   // resolve(Const.TabBars_DEFAULT_NEWS_TYPES);
-      // }
-      this.getSuccess = true
-    }).catch(() => {
-      this.getSuccess = false
-      // resolve(Const.TabBars_DEFAULT_NEWS_TYPES);
-    });
+      })
+
   };
 }

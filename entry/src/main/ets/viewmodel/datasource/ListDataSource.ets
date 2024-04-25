@@ -1,24 +1,25 @@
+import { XLog } from '@ohos-port/xlog';
+import { CatBreedData } from '../../dataclass/CatBreedData';
 import { ListData } from '../../dataclass/ListData';
-import Logger from '../../util/Logger';
 import { BasicDataSource } from './BasicDataSource';
 
 /**list数据source
  * */
 export class ListDataSource extends BasicDataSource {
-  private list: Array<ListData> = Array<ListData>(new ListData());
+  private list: Array<CatBreedData> = Array<CatBreedData>();
 
   public totalCount(): number {
     return this.list.length;
   }
 
-  public getData(index: number): ListData {
+  public getData(index: number): CatBreedData {
     return this.list[index];
   }
 
-  public pushData(newList: Array<ListData>): void {
+  public pushData(newList: Array<CatBreedData>): void {
     // if (this.listData.length < MAX_DATA_LENGTH) {
     // this.listData = [...this.listData, ...goodsInitialList];
-    Logger.info("" + newList)
+    XLog.i("aaaa" + newList)
     this.list = newList
     this.notifyDataReload()
     // }

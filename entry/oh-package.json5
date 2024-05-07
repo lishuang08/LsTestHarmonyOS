@@ -8,6 +8,8 @@
   "version": "1.0.0",
   "dependencies": {
     "@ohos/axios": "^2.2.1-rc.0",
-    "@ohos-port/xlog": "^1.1.0"
+//    "@ohos-port/xlog": "^1.1.0",
+//    "@abner/log": "^1.0.2"
+//    "@ohos/pulltorefresh" : "^2.0.5",
   }
 }

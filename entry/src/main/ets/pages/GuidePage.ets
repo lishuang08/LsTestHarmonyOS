@@ -1,14 +1,13 @@
 import { CommonConstants } from '../constants/CommonConstants';
 import { ServerDataBack } from '../network/ServerDataBack';
 import { CatData } from '../dataclass/CatData';
-import { CatDataSource } from '../viewmodel/datasource/CatDataSource';
+import { CatDataSource } from '../datasource/CatDataSource';
 import { ListData } from '../dataclass/ListData';
 import startAppViewModel from '../viewmodel/StartAppViewModel';
 import router from '@ohos.router';
 import axios, { AxiosError, AxiosResponse } from '@ohos/axios';
-import url from '@ohos.url';
-import { XLog } from '@ohos-port/xlog';
-import singleAxios from '../network/AxiosUtils'
+import axiosUtils from '../network/AxiosUtils'
+import { MyLog } from '../util/MyLog';
 
 
 @Entry
@@ -48,7 +47,7 @@ struct GuidePage {
   }
 
   aboutToAppear() {
-    XLog.d("aboutToAppear  aaaa")
+    MyLog.d("aboutToAppear  aaaa")
     // 请求服务端新闻数据
     this.getStartAppData()
   }
@@ -59,13 +58,13 @@ struct GuidePage {
 
     // let catUrl = "/images/search?limit=10"
 
-    singleAxios.instance
+    axiosUtils.instance
       .get<string, AxiosResponse<Array<CatData>>, null>("/images/search?limit=3")
       .then((response: AxiosResponse) => {
-        XLog.i("result:" + response.data);
+        MyLog.i("result:" + response.data);
         let result: Array<CatData> = response.data
 
-        XLog.d(result.toString())
+        MyLog.d(result.toString())
 
         this.list = result
         // this.dataSource.pushData(result)
@@ -77,7 +76,7 @@ struct GuidePage {
         this.getSuccess = true
       })
       .catch((error: AxiosError) => {
-        XLog.e("result:" + error.message);
+        MyLog.e("result:" + error.message);
         this.getSuccess = false
       })
       .then(() => {

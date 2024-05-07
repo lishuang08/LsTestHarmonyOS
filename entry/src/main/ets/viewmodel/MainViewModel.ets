@@ -1,11 +1,11 @@
 import { ListData } from '../dataclass/ListData';
 import { ServerDataBack } from '../network/ServerDataBack';
-import { ListDataSource } from './datasource/ListDataSource';
+import { ListDataSource } from '../datasource/ListDataSource';
 
 import singleAxios from '../network/AxiosUtils'
-import { XLog } from '@ohos-port/xlog';
 import { AxiosError, AxiosResponse } from '@ohos/axios';
 import { CatBreedData } from '../dataclass/CatBreedData';
+import { MyLog } from '../util/MyLog';
 
 class MainViewModel {
   public dataSource = new ListDataSource()
@@ -13,9 +13,9 @@ class MainViewModel {
   getListData() {
     // 发送get请求
     singleAxios.instance
-      .get<string, AxiosResponse<Array<CatBreedData>>, null>("/breeds?limit=10&page=0")
+      .get<string, AxiosResponse<Array<CatBreedData>>, null>("/breeds?limit=20&page=0")
       .then((response: AxiosResponse) => {
-        XLog.i("result:" + JSON.stringify(response.data));
+        MyLog.e("result:" + JSON.stringify(response.data));
 
         let result: Array<CatBreedData> = response.data
         // getListSuccess = true
@@ -27,7 +27,7 @@ class MainViewModel {
         // Logger.error(getListSuccess + " ")
       })
       .catch((error: AxiosError) => {
-        XLog.e("result:" + error.message);
+        MyLog.e("result:" + error.message);
         // getListSuccess = false
       })
       .then(() => {

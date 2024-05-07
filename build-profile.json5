@@ -1,46 +1,34 @@
 {
   "app": {
-    //    "signingConfigs": [
-    //      {
-    //        "name": "default",
-    //        "type": "HarmonyOS",
-    //        "material": {
-    //          "certpath": "C:\\Users\\ls\\.ohos\\config\\auto_debug_LsTestHarmonyOS_ls.yylx.testos_220086000021904184.cer",
-    //          "storePassword": "000000183C2AA6AC3351B69C0B867EF4ADB87D0239FBAE494D4ADC225272C9A9D8414FEE955B0665",
-    //          "keyAlias": "debugKey",
-    //          "keyPassword": "000000180FD9125905C8AC2D65C8935D1FEF4A101D9EE1A949F90C1B91EE5B09061D5BC1A08D0AD2",
-    //          "profile": "C:\\Users\\ls\\.ohos\\config\\auto_debug_LsTestHarmonyOS_ls.yylx.testos_220086000021904184.p7b",
-    //          "signAlg": "SHA256withECDSA",
-    //          "storeFile": "C:\\Users\\ls\\.ohos\\config\\auto_debug_LsTestHarmonyOS_ls.yylx.testos_220086000021904184.p12"
-    //        }
-    //      }
-    //    ],
-
-
-//    "products": [
-//      {
-//        "name": "default",
-//        "signingConfig": "default",
-//        "compileSdkVersion": 10,
-//        "compatibleSdkVersion": 10,
-//        "runtimeOS": "OpenHarmony",
-//      }
-//    ],
-
     "compileSdkVersion": 9,
     "compatibleSdkVersion": 9,
     "products": [
       {
         "name": "default",
-        "signingConfig": "default",
+        "signingConfig": "default"
       }
     ],
     "buildModeSet": [
       {
-        "name": "debug",
+        "name": "debug"
       },
       {
         "name": "release"
+      }
+    ],
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\ls\\.ohos\\config\\auto_debug_LsTestHarmonyOS_ls.yylx.testos_220086000021904184.cer",
+          "storePassword": "0000001B40AAD67881CB7D4D25FE92FE7F9092FEA02419EBBEB48D8FBF3A96FA2065EEC68C4EAEE29CA5AA",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001B297B4112CDA0BA71E0B777F11B21A108BFC47A8ACDE62FB29672BE0105A6C4056FD4794D2762E8",
+          "profile": "C:\\Users\\ls\\.ohos\\config\\auto_debug_LsTestHarmonyOS_ls.yylx.testos_220086000021904184.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\ls\\.ohos\\config\\auto_debug_LsTestHarmonyOS_ls.yylx.testos_220086000021904184.p12"
+        }
       }
     ]
   },

@@ -2,7 +2,7 @@ import { CommonConstants } from '../constants/CommonConstants';
 import router from '@ohos.router';
 
 import common from '@ohos.app.ability.common';
-import { XLog } from '@ohos-port/xlog';
+import { MyLog } from '../util/MyLog';
 
 @Entry
 @Component
@@ -12,7 +12,7 @@ struct DetailPage {
 
   aboutToAppear() {
     this.catId = router.getParams() as number
-    XLog.i("this.id  " + this.id )
+    MyLog.i("this.id  " + this.id )
 
   }
 

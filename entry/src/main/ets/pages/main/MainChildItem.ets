@@ -3,7 +3,7 @@ import router from '@ohos.router';
 import { TabItemData } from '../../dataclass/TabItemData';
 import { CatData } from '../../dataclass/CatData';
 import { ListData } from '../../dataclass/ListData';
-import { XLog } from  '@ohos-port/xlog';
+import { MyLog } from '../../util/MyLog';
 
 @Component
 export struct MainChildItem {
@@ -13,7 +13,7 @@ export struct MainChildItem {
     super();
     this.item = data
 
-    XLog.i("aaa " +data.title)
+    MyLog.i("aaa " +data.title)
   }
 
   aboutToAppear() {

@@ -1,11 +1,16 @@
 {
   "apiType": "stageMode",
   "buildOption": {
-//    "externalNativeOptions": {
-//      "abiFilters": [
-//        "x86_64"
-//      ]
-//    }
+    "sourceOption": {
+      "workers": [
+        './src/main/ets/workers/WorkerDownImage.ts'
+      ]
+    }
+    //    "externalNativeOptions": {
+    //      "abiFilters": [
+    //        "x86_64"
+    //      ]
+    //    }
   },
   "targets": [
     {

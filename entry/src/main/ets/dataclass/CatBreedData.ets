@@ -37,9 +37,18 @@ export class  CatBreedData {
   wikipedia_url: string;
   hypoallergenic: number;
   reference_image_id: string;
+  image? : ImageCatBreed
 }
 
 export class  Weight {
   imperial: string;
   metric: string;
+}
+
+export class ImageCatBreed{
+  id: string;
+
+  width: number
+  height:number
+  url: string;
 }

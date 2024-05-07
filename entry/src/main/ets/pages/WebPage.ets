@@ -1,8 +1,7 @@
 import webview from '@ohos.web.webview';
 
-@Entry
 @Component
-struct WebPage {
+export  struct  WebPage {
   @State message: string = 'Hello World'
   private controller = new webview.WebviewController();
 

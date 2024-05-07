@@ -12,10 +12,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { XLog } from '@ohos-port/xlog/src/main/ets/components/XLog';
 
 import dataPreferences from '@ohos.data.preferences';
 import { GlobalContext } from './GlobalContext';
+import { MyLog } from './MyLog';
 
 const PREFERENCES_NAME = 'myPreferences';
 const KEY_APP_FONT_SIZE = 'appFontSize';
@@ -58,7 +58,7 @@ export class PreferencesUtil {
       await preferences.put(key, str);
       preferences.flush();
     }).catch((err: Error) => {
-      XLog.e ('put the preferences failed, err: ' + err);
+      MyLog.e ('put the preferences failed, err: ' + err);
     });
   }
 
@@ -82,9 +82,9 @@ export class PreferencesUtil {
     const preferences: dataPreferences.Preferences = await getFontPreferences();
     let deleteValue = preferences.delete(KEY_APP_FONT_SIZE);
     deleteValue.then(() => {
-      XLog.e('Succeeded in deleting the key appFontSize.');
+      MyLog.e('Succeeded in deleting the key appFontSize.');
     }).catch((err: Error) => {
-      XLog.e('Failed to delete the key appFontSize. Cause: ' + err);
+      MyLog.e('Failed to delete the key appFontSize. Cause: ' + err);
     });
   }
 }

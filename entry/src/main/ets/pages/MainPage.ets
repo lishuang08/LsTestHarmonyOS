@@ -2,7 +2,8 @@ import common from '@ohos.app.ability.common';
 import router from '@ohos.router';
 import Want from '@ohos.app.ability.Want';
 import { MainChildPage } from './main/MainChildPage';
-import { XLog } from '@ohos-port/xlog/src/main/ets/components/XLog';
+import { MyLog } from '../util/MyLog';
+
 
 @Entry
 @Component
@@ -10,7 +11,7 @@ struct MainPage {
   // @Provide('pageInfos') pageInfos: NavPathStack = new NavPathStack()
 
   build() {
-    Navigation( ) {
+    Navigation() {
       Tabs({ barPosition: BarPosition.End }) {
         TabContent() {
           MainChildPage()
@@ -31,10 +32,12 @@ struct MainPage {
         }.tabBar('发现')
 
         TabContent() {
-          Text('退出应用').fontSize(30).onClick(() => {
-            // let appCtx = getContext(this) as common.UIAbilityContext;
-            // appCtx.isTerminating()
-          })
+
+
+          // Text('退出应用').fontSize(30).onClick(() => {
+          //   // let appCtx = getContext(this) as common.UIAbilityContext;
+          //   // appCtx.isTerminating()
+          // })
         }.tabBar("我的")
       }
     }
@@ -66,9 +69,9 @@ struct MainPage {
 
       let context = getContext(this) as common.UIAbilityContext;
       await context.startAbility(want);
-      XLog.i(`explicit start ability succeed`);
+      MyLog.i(`explicit start ability succeed`);
     } catch (error) {
-      XLog.i(`explicit start ability failed with ${error.code}`);
+      MyLog.i(`explicit start ability failed with ${error.code}`);
     }
   }
 }

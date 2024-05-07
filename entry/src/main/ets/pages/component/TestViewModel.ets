@@ -1,6 +1,5 @@
 import { CommonConstants } from '../../constants/CommonConstants';
 import router from '@ohos.router';
-import Logger from '../../util/Logger';
 import { TabItemData } from '../../dataclass/TabItemData';
 import { CatData } from '../../dataclass/CatData';
 import { ListData } from '../../dataclass/ListData';
@@ -13,7 +12,6 @@ export struct TestViewModel {
     super();
     this.item = data
 
-    Logger.info("aaa " +data.title)
   }
 
   aboutToAppear() {

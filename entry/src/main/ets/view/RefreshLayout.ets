@@ -1,4 +1,3 @@
-
 import RefreshConstants from '../constants/RefreshConstants';
 import RefreshLoadingClass from '../viewmodel/RefreshLoadingClass';
 
@@ -7,7 +6,7 @@ import RefreshLoadingClass from '../viewmodel/RefreshLoadingClass';
  */
 @Component
 export default struct RefreshLayout {
-  @ObjectLink refreshLoadingClass: RefreshLoadingClass;
+  @Prop refreshLoadingClass: RefreshLoadingClass;
 
   build() {
     Row() {

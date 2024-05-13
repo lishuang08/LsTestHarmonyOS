@@ -27,11 +27,15 @@ export struct MainChildPage {
   // public listDataSource = new ListDataSource()
   public listDataSource = new ListDataSource()
 
+  @State currentIndex: number = 0;
+
   @State getSuccess: boolean = false
   @State tabs: Array<TabItemData> = new Array<TabItemData>(new TabItemData("首页", 0), new TabItemData("第二页", 1), new TabItemData("第三页", 2))
   @State isRefreshing: boolean = false
   counter = 0
   private scroller = new Scroller()
+
+  private tabsController : TabsController = new TabsController()
 
   // @State arrlist :Array<CatBreedData>  = new Array<CatBreedData>()
 
@@ -129,7 +133,7 @@ export struct MainChildPage {
           }.tabBar(item.name)
         } else if (item.page == 1) {
           TabContent() {
-            MainRefreshView()
+            MainRefreshView({currentIndex: $currentIndex})
           }
           .tabBar(item.name)
         } else {
@@ -140,6 +144,9 @@ export struct MainChildPage {
         }
       })
     }
+    .onChange((index) => {
+      this.currentIndex = index
+    })
     .width('100%')
     .height('100%')
   }

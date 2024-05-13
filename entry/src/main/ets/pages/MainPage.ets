@@ -33,7 +33,6 @@ struct MainPage {
 
         TabContent() {
 
-
           // Text('退出应用').fontSize(30).onClick(() => {
           //   // let appCtx = getContext(this) as common.UIAbilityContext;
           //   // appCtx.isTerminating()

@@ -14,15 +14,16 @@ import { MyLog } from '../../util/MyLog';
 
 @Component
 export struct MainRefreshView {
-  // index: number = 0;
-  // @Watch('changeCategory') @Link currentIndex: number;
+  index: number = 1; //当前页的标签 1
+  @Watch('changeCategory') @Link currentIndex: number; // 关联父类的tab，当前页的标签
   @State getSuccess: boolean = false
   @State refreshStore: RefreshListViewModel = new RefreshListViewModel();
 
   changeCategory() {
-    // if (this.currentIndex !== this.index) {
-    //   return;
-    // }
+    if (this.currentIndex !== this.index) {
+      return;
+    }
+
     this.refreshStore.currentPage = 0;
     CatDataViewModel.getListDataPromise(this.refreshStore.currentPage, this.refreshStore.pageSize).then((response: AxiosResponse) => {
       MyLog.i("result:" + JSON.stringify(response.data));
@@ -30,14 +31,14 @@ export struct MainRefreshView {
       if (response.status == 200) {
         this.refreshStore.pageState = PageState.Success;
 
-        if (this.refreshStore.listDataSource.totalCount()   === this.refreshStore.pageSize) {
+        if (result.length === this.refreshStore.pageSize) {
           this.refreshStore.currentPage++;
           this.refreshStore.hasMore = true;
         } else {
           this.refreshStore.hasMore = false;
         }
         this.refreshStore.listDataSource.setData(result)
-        // this. arrlist = result
+
       } else {
         // resolve(Const.TabBars_DEFAULT_NEWS_TYPES);
       }
@@ -49,11 +50,15 @@ export struct MainRefreshView {
     }).then(() => {
       //最终执行
     })
-
   }
 
   aboutToAppear() {
     this.changeCategory()
+  }
+
+  reloadAction() {
+    this.refreshStore.pageState = PageState.Loading;
+    this.changeCategory();
   }
 
   build() {
@@ -83,11 +88,6 @@ export struct MainRefreshView {
         }
       }
     })
-  }
-
-  reloadAction() {
-    this.refreshStore.pageState = PageState.Loading;
-    this.changeCategory();
   }
 
   @Builder

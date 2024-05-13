@@ -4,7 +4,7 @@ import RefreshLoadingClass from '../viewmodel/RefreshLoadingClass';
 
 @Component
 export default struct LoadMoreLayout {
-  @ObjectLink loadMoreLayoutClass: RefreshLoadingClass;
+  @Prop  loadMoreLayoutClass: RefreshLoadingClass;
 
   build() {
     Row() {

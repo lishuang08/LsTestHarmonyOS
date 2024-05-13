@@ -23,6 +23,16 @@
     {
       "name": "launcher_background",
       "value": "#FF1A9FFF"
+    },
+
+
+    {
+      "name": "title_color",
+      "value": "#182431"
+    },
+    {
+      "name": "color_index",
+      "value": "#1E67DC"
     }
   ]
 }

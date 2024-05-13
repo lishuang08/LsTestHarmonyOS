@@ -27,6 +27,16 @@ export default class RefreshConstants {
    */
   static readonly DELAY_ANIMATION_DURATION: number = 300;
 
+  /**
+   * 100 percent.
+   */
+  static readonly FULL_PERCENT: string = '100%';
+
+  /**
+   * Divider width.
+   */
+  static readonly DIVIDER_WIDTH: string = '90%';
+
 }
 
 /**

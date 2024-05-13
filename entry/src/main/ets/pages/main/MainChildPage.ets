@@ -5,7 +5,6 @@ import { ListDataSource } from '../../datasource/ListDataSource';
 import { MainChildItem } from './MainChildItem';
 import { ListData } from '../../dataclass/ListData';
 import { ServerDataBack } from '../../network/ServerDataBack';
-import mainViewModel from '../../viewmodel/MainViewModel';
 import { CatBreedData } from '../../dataclass/CatBreedData';
 import { AxiosError, AxiosResponse } from '@ohos/axios';
 
@@ -17,19 +16,49 @@ import FaultLogger from '@ohos.faultLogger';
 import { MyLog } from '../../util/MyLog';
 
 import { PullToRefresh } from "./../../lib/PullToRefresh/PullToRefresh"
+import { CatData } from '../../dataclass/CatData';
+import { MainRefreshView } from './MainRefreshView';
+import CatDataViewModel from '../../viewmodel/CatDataViewModel';
+import catVm from '../../viewmodel/CatDataViewModel';
 
 @Preview
 @Component
 export struct MainChildPage {
+  // public listDataSource = new ListDataSource()
   public listDataSource = new ListDataSource()
-  @State tabs: Array<TabItemData> = new Array<TabItemData>(new TabItemData("首页", 0), new TabItemData("第二页", 1), new TabItemData("第三页", 2))
+
   @State getSuccess: boolean = false
+  @State tabs: Array<TabItemData> = new Array<TabItemData>(new TabItemData("首页", 0), new TabItemData("第二页", 1), new TabItemData("第三页", 2))
   @State isRefreshing: boolean = false
   counter = 0
   private scroller = new Scroller()
 
+  // @State arrlist :Array<CatBreedData>  = new Array<CatBreedData>()
+
   aboutToAppear() {
-    this.getListData()
+    // this.getListData()
+    this.getData()
+  }
+
+  getData() {
+    catVm.getListDataPromise().then((response: AxiosResponse) => {
+      MyLog.i("result:" + JSON.stringify(response.data));
+      let result: Array<CatBreedData> = response.data
+      if (response.status == 200) {
+        this.listDataSource.setData(result)
+        // this. arrlist = result
+      } else {
+        // resolve(Const.TabBars_DEFAULT_NEWS_TYPES);
+      }
+      this.getSuccess = true
+    })
+      .catch((error: AxiosError) => {
+        MyLog.e("result:" + error.message);
+        this.getSuccess = false
+      })
+      .then(() => {
+        //最终执行
+      })
   }
 
   build() {
@@ -39,17 +68,17 @@ export struct MainChildPage {
           TabContent() {
             // Refresh({ refreshing: $$this.isRefreshing, offset: 120, friction: 100 }) {
             if (this.getSuccess) {
-              this.mainListView()
+              // this.mainListView()
 
               // PullToRefresh({
               //   // 必传项，列表组件所绑定的数据
-              //   data: $data,
+              //   // data: $(catVm.listDataSource),
               //   // 必传项，需绑定传入主体布局内的列表或宫格组件
               //   scroller: this.scroller,
               //   // 必传项，自定义主体布局，内部有列表或宫格组件
               //   customList: () => {
-              //     // 一个用@Builder修饰过的UI方法
-              //     this.mainListView();
+                  // 一个用@Builder修饰过的UI方法
+                  this.mainListView();
               //   },
               //   // 可选项，下拉刷新回调
               //   onRefresh: () => {
@@ -100,7 +129,7 @@ export struct MainChildPage {
           }.tabBar(item.name)
         } else if (item.page == 1) {
           TabContent() {
-            SecondChildPage()
+            MainRefreshView()
           }
           .tabBar(item.name)
         } else {
@@ -118,18 +147,20 @@ export struct MainChildPage {
   @Builder
   mainListView() {
     List() {
-      LazyForEach(this.listDataSource, (childItem: CatBreedData) => {
+
+      LazyForEach(this .listDataSource, (childItem: CatBreedData) => {
         ListItem() {
           this.childItemView(childItem)
         }.width('100%')
       })
     }
+    .cachedCount(3) // 缓存3个
     .width('100%')
     .height('100%')
     .onTouch((event?: TouchEvent) => {
-      if (event) {
-        MyLog.e("")
-      }
+      // if (event) {
+      //   MyLog.e("")
+      // }
     })
 
     // .onScrollFrameBegin((offset, state) => {
@@ -169,34 +200,5 @@ export struct MainChildPage {
         params: childItem.id
       })
     })
-
-    // }
-  }
-
-  getListData() {
-    // 发送get请求
-    axiosUtils.instance
-      .get<string, AxiosResponse<Array<CatBreedData>>, null>("/breeds?limit=20&page=0")
-      .then((response: AxiosResponse) => {
-        MyLog.i("result:" + JSON.stringify(response.data));
-
-        let result: Array<CatBreedData> = response.data
-
-        if (response.status == 200) {
-          this.listDataSource.pushData(result)
-        } else {
-          // resolve(Const.TabBars_DEFAULT_NEWS_TYPES);
-        }
-        this.getSuccess = true
-      })
-      .catch((error: AxiosError) => {
-        MyLog.e("result:" + error.message);
-        this.getSuccess = false
-      })
-      .then(() => {
-        //最终执行
-
-      })
-
   }
 }

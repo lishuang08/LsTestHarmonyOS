@@ -59,6 +59,35 @@
     {
       "name": "advertise_icon_margin",
       "value": "16vp"
+    },
+    {
+      "name": "refresh_img_size",
+      "value": "18vp"
+    },
+    {
+      "name": "normal_padding",
+      "value": "8vp"
+    },
+    {
+      "name": "title_font",
+      "value": "16fp"
+    },
+
+
+    {
+      "name": "no_data_img_size",
+      "value": "120vp"
+    },
+
+    {
+      "name": "no_data_opacity",
+      "value": "0.6"
+    },
+
+    {
+      "name": "common_padding",
+      "value": "12vp"
     }
+
   ]
 }

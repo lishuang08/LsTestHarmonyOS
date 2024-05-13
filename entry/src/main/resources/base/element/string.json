@@ -35,6 +35,22 @@
     {
       "name": "EntryAbility1_label",
       "value": "label"
+    },
+
+
+    {
+      "name": "page_none_msg",
+      "value": "Network loading failure"
+    },
+
+    {
+      "name": "click_reload",
+      "value": "Click Reload"
+    },
+    {
+      "name": "prompt_message",
+      "value": "No more data"
     }
+
   ]
 }

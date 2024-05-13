@@ -16,12 +16,20 @@ export class ListDataSource extends BasicDataSource {
     return this.list[index];
   }
 
-  public pushData(newList: Array<CatBreedData>): void {
+  public setData (newList: Array<CatBreedData>): void {
     // if (this.listData.length < MAX_DATA_LENGTH) {
-    // this.listData = [...this.listData, ...goodsInitialList];
     MyLog.i("aaaa" + newList)
     this.list = newList
     this.notifyDataReload()
     // }
   }
+
+  public addData (newList: Array<CatBreedData>): void {
+    // if (this.listData.length < MAX_DATA_LENGTH) {
+    MyLog.i("aaaa" + newList)
+    this.list = [...this.list, ...newList]
+    this.notifyDataReload()
+    // }
+  }
+
 }

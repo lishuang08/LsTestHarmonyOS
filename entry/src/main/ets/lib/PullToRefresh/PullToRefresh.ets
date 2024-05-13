@@ -25,7 +25,8 @@ const IS_LOADING = 5;
 
 @Component
 export struct PullToRefresh {
-  @Link data: Object[];
+  // @Link data: Object[];
+
   scroller: Scroller = new Scroller();
   @BuilderParam customList?: () => void;
   refreshConfigurator?: PullToRefreshConfigurator;
@@ -298,6 +299,7 @@ export struct PullToRefresh {
             if (this.touchYOld !== undefined) {
 
               if ((this.state == IS_FREE && this.listOffsetOld == this.listOffsetNew && this.listOffsetOld != 0 && this.touchYNew < this.touchYOld
+              //临时去掉，版本较低
                 // && this.scroller.isAtEnd()
 
               ) ||

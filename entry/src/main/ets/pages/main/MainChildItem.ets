@@ -4,30 +4,43 @@ import { TabItemData } from '../../dataclass/TabItemData';
 import { CatData } from '../../dataclass/CatData';
 import { ListData } from '../../dataclass/ListData';
 import { MyLog } from '../../util/MyLog';
+import { CatBreedData } from '../../dataclass/CatBreedData';
 
 @Component
 export struct MainChildItem {
- @State item: ListData = new  ListData()
-
-  constructor(data: ListData) {
-    super();
-    this.item = data
-
-    MyLog.i("aaa " +data.title)
-  }
-
-  aboutToAppear() {
-  }
+  item: CatBreedData = new CatBreedData()
 
   build() {
-    Column() {
-      Text(this.item.title) {
+    Row() {
+      if (this.item.image != null) {
+        Image(this.item.image.url)
+          .width(56)
+          .align(Alignment.Start)
+          .alt('/../resources/base/media/ic_default.svg')
+          .height(56)// .syncLoad(true) //同步加载图片，会导致加载过慢
+          .objectFit(ImageFit.Fill)
+          .margin(15)
+      }
 
-      }.width('100%').fontSize(20)
+      Column() {
+        Text(this.item.name) {
 
-      Text(this.item.body) {
-      }.width('100%').fontSize(16)
+        }.width('100%').fontSize(20)
+
+        Text(this.item.id + "") {
+        }.width('100%').fontSize(16)
+      }.margin(10)
+
     }.width('100%')
+    .onClick(() => {
+      // infos.pushPathByName('pageOne', null)
+      router.replaceUrl({
+        url: CommonConstants.DETAIL_PAGE_URL,
+        params: this.item.id
+      })
+    })
+
+    // }
 
   }
 }

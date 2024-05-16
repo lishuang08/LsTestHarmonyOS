@@ -20,7 +20,7 @@ import { CatData } from '../dataclass/CatData';
 import RefreshLoadingClass from './RefreshLoadingClass';
 import { MyLog } from '../util/MyLog';
 import { CatBreedData } from '../dataclass/CatBreedData';
-import { ListDataSource } from '../datasource/ListDataSource';
+import { CatBreedSource } from '../datasource/CatBreedSource';
 
 import { AxiosError, AxiosResponse } from '@ohos/axios';
 
@@ -35,18 +35,15 @@ export default class RefreshListViewModel {
   private isCanLoadMore = false;
   public startIndex = 0;
   public endIndex = 0;
-
   public currentPage: number = 0;
   public pageSize: number = 20;
-
   public offsetY: number = 0;
   public hasMore: boolean = true;
   public refreshLayoutClass: RefreshLoadingClass = new RefreshLoadingClass($r('app.media.ic_pull_down_refresh'), $r('app.string.pull_down_refresh_text'), 0);
   public loadingMoreClass: RefreshLoadingClass = new RefreshLoadingClass($r('app.media.ic_pull_up_load'), $r('app.string.pull_up_load_text'), 0);
   public pageState: number = PageState.Loading;
-
-  public listDataSource = new ListDataSource()
-  public getSuccess : boolean = false
+  public listDataSource = new CatBreedSource()
+  public getSuccess: boolean = false
 
   listTouchEvent(event: TouchEvent) {
     switch (event.type) {
@@ -89,6 +86,7 @@ export default class RefreshListViewModel {
 
   touchMovePullRefresh(event: TouchEvent) {
     if (this.startIndex === 0) {
+
       this.isPullRefreshOperation = true;
       let height = vp2px(RefreshConstants.CUSTOM_LAYOUT_HEIGHT);
       this.offsetY = event.touches[0].y - this.downY;
@@ -123,7 +121,6 @@ export default class RefreshListViewModel {
               this.hasMore = false;
             }
             this.listDataSource.setData(result)
-            // this. arrlist = result
           } else {
             // resolve(Const.TabBars_DEFAULT_NEWS_TYPES);
           }
@@ -136,7 +133,6 @@ export default class RefreshListViewModel {
         }).then(() => {
           //最终执行
         })
-
       }, RefreshConstants.DELAY_TIME);
     } else {
       this.closeRefresh(false);
@@ -183,6 +179,7 @@ export default class RefreshListViewModel {
 
   closeRefresh(isRefreshSuccess: boolean) {
     setTimeout(() => {
+
       let delay = RefreshConstant.DELAY_PULL_DOWN_REFRESH;
       if (this.isCanRefresh) {
         this.pullRefreshState(isRefreshSuccess ? RefreshState.Success : RefreshState.Fail);
@@ -219,7 +216,6 @@ export default class RefreshListViewModel {
       setTimeout(() => {
         catVm.getListDataPromise(this.currentPage, this.pageSize).then((response: AxiosResponse) => {
           MyLog.i("result:" + JSON.stringify(response.data));
-
           let result: Array<CatBreedData> = response.data
           if (response.status == 200) {
             if (result.length === this.pageSize) {
@@ -228,19 +224,17 @@ export default class RefreshListViewModel {
             } else {
               this.hasMore = false;
             }
-
             this.listDataSource.addData(result)
-            // this. arrlist = result
           } else {
-            // resolve(Const.TabBars_DEFAULT_NEWS_TYPES);
+
           }
           this.getSuccess = true
         }).catch((error: AxiosError) => {
           prompt.showToast({ message: error.message });
           this.getSuccess = false
         }).then(() => {
-            //最终执行
-          })
+          //最终执行
+        })
         this.closeLoadMore();
       }, RefreshConstants.DELAY_TIME);
     } else {

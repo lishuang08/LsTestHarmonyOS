@@ -11,6 +11,7 @@ import RefreshListViewModel from '../../viewmodel/RefreshListViewModel';
 import { MainChildItem } from './MainChildItem';
 import { AxiosError, AxiosResponse } from '@ohos/axios';
 import { MyLog } from '../../util/MyLog';
+import ArrayList from '@ohos.util.ArrayList';
 
 @Component
 export struct MainRefreshView {
@@ -88,6 +89,7 @@ export struct MainRefreshView {
         }
       }
     })
+
   }
 
   @Builder
@@ -96,13 +98,11 @@ export struct MainRefreshView {
       ListItem() {
         RefreshLayout({ refreshLoadingClass: this.refreshStore.refreshLayoutClass })
       }
-
       LazyForEach(this.refreshStore.listDataSource, (childItem: CatBreedData) => {
         ListItem() {
           MainChildItem({ item: childItem })
         }.width('100%')
       })
-
       ListItem() {
         if (this.refreshStore.hasMore) {
           LoadMoreLayout({ loadMoreLayoutClass: this.refreshStore.loadingMoreClass })
@@ -116,11 +116,9 @@ export struct MainRefreshView {
     .height('100%')
     .edgeEffect(EdgeEffect.None)
     .onScrollIndex((start: number, end: number) => {
-      // Listen to the first index of the current list.
       this.refreshStore.startIndex = start;
       this.refreshStore.endIndex = end;
     })
-
     // .onScrollFrameBegin((offset, state) => {
     //   //设置为0 ,禁止滑动
     //   return { offsetRemain: 0 }

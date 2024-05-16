@@ -1,7 +1,7 @@
 import { CommonConstants } from '../../constants/CommonConstants';
 import router from '@ohos.router';
 import { TabItemData } from '../../dataclass/TabItemData';
-import { ListDataSource } from '../../datasource/ListDataSource';
+import { CatBreedSource } from '../../datasource/CatBreedSource';
 import { MainChildItem } from './MainChildItem';
 import { ListData } from '../../dataclass/ListData';
 import { ServerDataBack } from '../../network/ServerDataBack';
@@ -20,12 +20,13 @@ import { CatData } from '../../dataclass/CatData';
 import { MainRefreshView } from './MainRefreshView';
 import CatDataViewModel from '../../viewmodel/CatDataViewModel';
 import catVm from '../../viewmodel/CatDataViewModel';
+import ArrayList from '@ohos.util.ArrayList';
 
 @Preview
 @Component
 export struct MainChildPage {
   // public listDataSource = new ListDataSource()
-  public listDataSource = new ListDataSource()
+  public listDataSource = new CatBreedSource()
 
   @State currentIndex: number = 0;
 
@@ -157,7 +158,7 @@ export struct MainChildPage {
 
       LazyForEach(this .listDataSource, (childItem: CatBreedData) => {
         ListItem() {
-          this.childItemView(childItem)
+          MainChildItem({item :childItem})
         }.width('100%')
       })
     }
@@ -176,36 +177,4 @@ export struct MainChildPage {
     // })
   }
 
-  @Builder
-  childItemView(childItem: CatBreedData) {
-    // NavDestination() {
-    Row() {
-      if (childItem.image != null) {
-        Image(childItem.image.url)
-          .width(56)
-          .align(Alignment.Start)
-          .alt('/../resources/base/media/ic_default.svg')
-          .height(56)// .syncLoad(true) //同步加载图片，会导致加载过慢
-          .objectFit(ImageFit.Fill)
-          .margin(15)
-      }
-
-      Column() {
-        Text(childItem.name) {
-
-        }.width('100%').fontSize(20)
-
-        Text(childItem.id + "") {
-        }.width('100%').fontSize(16)
-      }.margin(10)
-
-    }.width('100%')
-    .onClick(() => {
-      // infos.pushPathByName('pageOne', null)
-      router.replaceUrl({
-        url: CommonConstants.DETAIL_PAGE_URL,
-        params: childItem.id
-      })
-    })
-  }
 }

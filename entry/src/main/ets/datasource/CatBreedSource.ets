@@ -2,11 +2,12 @@ import { CatBreedData } from '../dataclass/CatBreedData';
 import { ListData } from '../dataclass/ListData';
 import { MyLog } from '../util/MyLog';
 import { BasicDataSource } from './BasicDataSource';
+import ArrayList from '@ohos.util.ArrayList';
 
 /**list数据source
  * */
-export class ListDataSource extends BasicDataSource {
-  private list: Array<CatBreedData> = Array<CatBreedData>();
+export class CatBreedSource extends BasicDataSource {
+  private list: Array<CatBreedData> = Array<CatBreedData>()
 
   public totalCount(): number {
     return this.list.length;
@@ -16,7 +17,7 @@ export class ListDataSource extends BasicDataSource {
     return this.list[index];
   }
 
-  public setData (newList: Array<CatBreedData>): void {
+  public setData(newList: Array<CatBreedData>): void {
     // if (this.listData.length < MAX_DATA_LENGTH) {
     MyLog.i("aaaa" + newList)
     this.list = newList
@@ -24,12 +25,11 @@ export class ListDataSource extends BasicDataSource {
     // }
   }
 
-  public addData (newList: Array<CatBreedData>): void {
+  public addData(newList: Array<CatBreedData>): void {
     // if (this.listData.length < MAX_DATA_LENGTH) {
     MyLog.i("aaaa" + newList)
     this.list = [...this.list, ...newList]
     this.notifyDataReload()
     // }
   }
-
 }

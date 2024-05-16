@@ -45,6 +45,9 @@ export class CommonConstants {
   static readonly MAIN_PAGE_URL: string = 'pages/MainPage';
   static readonly GUIDE_PAGE_URL: string = 'pages/GuidePage';
   static readonly DETAIL_PAGE_URL: string = 'pages/DetailPage';
+  static readonly CAT_BREED_LIST_URL: string = 'pages/main/listbybreed/CatBreedListPage';
+
+
 
   /**
    * Copyright area column width.

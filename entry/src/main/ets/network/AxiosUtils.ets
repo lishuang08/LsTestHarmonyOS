@@ -13,7 +13,7 @@ export class AxiosUtils {
   constructor() {
     this.instance = this.getInstance()
     this.instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-      MyLog.d("request config.url: " + config.url);
+      MyLog.e("request   url: " + config.baseURL + config.url);
 
       // 对请求数据做点什么
       return config;
@@ -25,7 +25,7 @@ export class AxiosUtils {
 
     this.instance.interceptors.response.use((response: AxiosResponse) => {
 
-      MyLog.d("result response: " + response);
+      MyLog.e("result response: " + JSON.stringify( response.data ) );
       // 对响应数据做点什么
       return response;
     }, (error: AxiosError) => {

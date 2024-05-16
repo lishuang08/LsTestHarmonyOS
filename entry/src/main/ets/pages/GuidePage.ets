@@ -8,6 +8,8 @@ import router from '@ohos.router';
 import axios, { AxiosError, AxiosResponse } from '@ohos/axios';
 import axiosUtils from '../network/AxiosUtils'
 import { MyLog } from '../util/MyLog';
+import taskpool from '@ohos.taskpool';
+import request from '@ohos.request';
 
 
 @Entry
@@ -17,6 +19,22 @@ struct GuidePage {
   private swiperController: SwiperController = new SwiperController()
   public dataSource = new CatDataSource()
   public list = new Array<CatData>()
+
+  downImage(imgUrl: string) {
+    let downloadTask;
+    try {
+      request.downloadFile(globalThis.abilityContext, { url: imgUrl,
+        filePath: 'xxx/xxxxx.hap'}, (err, data) => {
+        if (err) {
+          console.error('Failed to request the download. Cause: ' + JSON.stringify(err));
+          return;
+        }
+        downloadTask = data;
+      });
+    } catch (err) {
+      console.error('err.code : ' + err.code + ', err.message : ' + err.message);
+    }
+  }
 
   build() {
     Column() {
@@ -67,12 +85,20 @@ struct GuidePage {
         MyLog.d(result.toString())
 
         this.list = result
+
+        // result.forEach((item: CatData) => {
+        //   let task: taskpool.Task = new taskpool.Task(this.downImage, item.url);
+        //   await taskpool.execute(task)
+        //
+        // })
         // this.dataSource.pushData(result)
         // if (data.success) {
         //
         // } else {
         //   // resolve(Const.TabBars_DEFAULT_NEWS_TYPES);
         // }
+
+
         this.getSuccess = true
       })
       .catch((error: AxiosError) => {

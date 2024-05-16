@@ -5,6 +5,7 @@
     "pages/GuidePage",
     "pages/DetailPage",
     "pages/CanvasPage",
-    "pages/navigation/MainNavPage"
+    "pages/navigation/MainNavPage",
+    "pages/main/listbybreed/CatBreedListPage"
   ]
 }

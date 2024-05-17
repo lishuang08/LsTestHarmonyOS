@@ -24,6 +24,9 @@ struct GuidePage {
     let downloadTask;
     try {
       request.downloadFile(globalThis.abilityContext, { url: imgUrl,
+        header :{
+           'x-api-key'   :  "live_aK46UpThibgCvmIMnpvB38RYj9XFiDnqJFdypXUG2SnK8AviL3u1X2V22d7MsLZl"
+        } ,
         filePath: 'xxx/xxxxx.hap'}, (err, data) => {
         if (err) {
           console.error('Failed to request the download. Cause: ' + JSON.stringify(err));

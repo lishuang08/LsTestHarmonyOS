@@ -25,7 +25,8 @@ export class AxiosUtils {
 
     this.instance.interceptors.response.use((response: AxiosResponse) => {
 
-      MyLog.e("result response: " + JSON.stringify( response.data ) );
+      // MyLog.e("result response: " + JSON.stringify( response.data ) );
+
       // 对响应数据做点什么
       return response;
     }, (error: AxiosError) => {

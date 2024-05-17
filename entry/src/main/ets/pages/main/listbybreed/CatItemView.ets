@@ -7,12 +7,13 @@ import { MyLog } from '../../../util/MyLog';
 import { CatBreedData } from '../../../dataclass/CatBreedData';
 
 @Component
-export struct CatItem  {
+export struct CatItemView  {
   item: CatData = new CatData()
 
   build() {
     Row() {
       if (this.item.url != null) {
+
         Image(this.item.url)
           .width(56)
           .align(Alignment.Start)
@@ -32,6 +33,8 @@ export struct CatItem  {
       }.margin(10)
 
     }.width('100%')
+    // 在IconItem内调用renderGroup，true为开启，false为关闭
+    // .renderGroup(this.renderGroupFlag)
     .onClick(() => {
       // infos.pushPathByName('pageOne', null)
       router.replaceUrl({

@@ -35,15 +35,16 @@ export struct MainChildItem {
     .onClick(() => {
       // infos.pushPathByName('pageOne', null)
 
-      MyLog.e("click  : "  +  this.item.id  )
+      MyLog.e("click  : " + this.item.id)
 
       router.pushUrl({
         url: CommonConstants.CAT_BREED_LIST_URL,
         params: {
-          breedid : this.item.id
+          breedid: this.item.id
         }
       })
     })
+
     // }
 
   }

@@ -3,7 +3,7 @@
   "buildOption": {
     "sourceOption": {
       "workers": [
-        './src/main/ets/workers/WorkerDownImage.ts'
+        "./src/main/ets/workers/WorkerDownImage.ts"
       ]
     }
     //    "externalNativeOptions": {

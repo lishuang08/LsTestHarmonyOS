@@ -15,7 +15,7 @@ export class CatDataSource extends BasicDataSource {
     return this.list[index];
   }
 
-  public setData (newList: Array<CatData>): void {
+  public setData(newList: Array<CatData>): void {
     // if (this.listData.length < MAX_DATA_LENGTH) {
     MyLog.i("aaaa" + newList)
     this.list = newList
@@ -23,11 +23,17 @@ export class CatDataSource extends BasicDataSource {
     // }
   }
 
-  public addData (newList: Array<CatData>): void {
+  public addData(newList: Array<CatData>): void {
     // if (this.listData.length < MAX_DATA_LENGTH) {
     MyLog.i("aaaa" + newList)
     this.list = [...this.list, ...newList]
     this.notifyDataReload()
     // }
+  }
+
+  public updateItem(fPath : string , index: number) {
+    this.list[index].fileUri = fPath
+    // this.list.splice(index, 1, newItem)
+    this.notifyDataChange(index)
   }
 }

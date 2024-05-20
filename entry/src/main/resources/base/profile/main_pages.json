@@ -6,6 +6,7 @@
     "pages/DetailPage",
     "pages/CanvasPage",
     "pages/navigation/MainNavPage",
-    "pages/main/listbybreed/CatBreedListPage"
+    "pages/main/listbybreed/CatBreedListPage",
+    "pages/TestCodePage"
   ]
 }

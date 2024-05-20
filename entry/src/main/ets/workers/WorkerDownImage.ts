@@ -1,4 +1,6 @@
 import worker, { ThreadWorkerGlobalScope, MessageEvents, ErrorEvent } from '@ohos.worker';
+import emitter from '@ohos.events.emitter';
+// import { EmitterEventData } from '../dataclass/EmitterEventData';
 
 const workerPort: ThreadWorkerGlobalScope = worker.workerPort;
 
@@ -9,6 +11,16 @@ const workerPort: ThreadWorkerGlobalScope = worker.workerPort;
  * @param e message data
  */
 workerPort.onmessage = function (e: MessageEvents) {
+
+  // let result: EmitterEventData = { name: "aaa",
+  //   id: 123 }
+
+  emitter.emit({ eventId: 1 }, {
+    data: {name: "aaa",
+      id: 123}
+  })
+
+
 }
 
 /**

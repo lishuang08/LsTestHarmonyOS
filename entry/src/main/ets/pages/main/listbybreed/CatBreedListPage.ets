@@ -15,24 +15,29 @@ import App from '@system.app'
 import File from '@system.file'
 import common from '@ohos.app.ability.common'
 import fs from '@ohos.file.fs';
+import fileUri from '@ohos.file.fileuri'
+import systemDateTime from '@ohos.systemDateTime'
+import emitter from '@ohos.events.emitter'
+import { EmitterEventData } from '../../../dataclass/EmitterEventData'
+import worker, { Event } from '@ohos.worker'
 
 
 @Concurrent
 async function transferAtomics(arg1: CatData, fPath: string, ctx: Context): Promise<String> {
   let downloadTask;
-  MyLog.e("wait begin::  " + arg1.url);
+  // MyLog.e("wait begin::  " + arg1.url);
   // 使用Atomics进行操作
   // let res = Atomics.wait(arg1, 0, 0, 3000);
 
   try {
     let back = await request.downloadFile(ctx, { url: arg1.url, header: { 'x-api-key': "live_aK46UpThibgCvmIMnpvB38RYj9XFiDnqJFdypXUG2SnK8AviL3u1X2V22d7MsLZl" }, filePath: fPath })
 
-    let filePath = await back.getTaskInfo()
+    let fileInfo = await back.getTaskInfo()
 
-    return "下载成功 : " + filePath.filePath
+
+    return fileInfo.filePath
   } catch (err) {
     MyLog.e('err.code : ' + err.code + ', err.message : ' + err.message);
-
 
     return "下载失败"
   }
@@ -46,19 +51,61 @@ struct CatBreedListPage {
   @State success: boolean = false
   private scroller = new Scroller()
   private context = getContext(this) as common.UIAbilityContext;
-  private filesDir = this.context.filesDir;
+  private cacheDir  = this.context.cacheDir;
 
-  startTask(arg1: CatData) {
-    let task: taskpool.Task = new taskpool.Task(transferAtomics, arg1, this.filesDir + "/" + arg1.id + ".jpg", this.context);
+  startTask(item: CatData, fPath: string, index: number) {
+    // https://cdn2.thecatapi.com/images/uvt2Psd9O.jpg
+
+    let task: taskpool.Task = new taskpool.Task(transferAtomics, item, fPath, this.context);
     taskpool.execute(task).then((res) => {
-      MyLog.e("this res is: " + res);
+      let resPath = res as string
+
+      let uri = fileUri.getUriFromPath(fPath); // file://<packageName>/data/storage/el2/base/haps/entry/files/test
+      // let fileUriObject = new fileUri.FileUri(uri);
+
+      this.catSource.updateItem(uri, index)
+      // MyLog.e("this res is: " + uri);
     })
-    setTimeout(() => {
-    }, 1000);
+
+    // setTimeout(() => {
+    // }, 1000);
   }
 
   aboutToAppear() {
     this.getList()
+
+    this.createWorker()
+  }
+
+  async createWorker() {
+    let num = await systemDateTime.getCurrentTime(true)
+
+    const worker1: worker.ThreadWorker = new worker.ThreadWorker('entry/ets/workers/WorkerDownImage.ets')
+
+
+    emitter.on({ eventId: 1 }, (data: emitter.EventData) => {
+      let back = data.data as EmitterEventData
+
+      MyLog.e("back :" + back.name + " " + back.id)
+
+    })
+
+    worker1.onerror = () => {
+      MyLog.e("worker1.onerror ")
+    }
+
+    worker1.dispatchEvent({
+      type: "type1",
+      timeStamp: num
+    })
+
+    worker1.addEventListener("type1", (event: Event) => {
+      MyLog.e("event : " + event.type + "   timeStamp : " + event.timeStamp)
+
+    })
+    worker1.postMessage("message  111")
+
+
   }
 
   build() {
@@ -75,38 +122,49 @@ struct CatBreedListPage {
   }
 
   getList() {
-    fs.stat(this.filesDir).then(function (stat) {
-      console.info("get file info succeed, the size of file is " + stat.size);
+    fs.stat(this.cacheDir).then(function (stat) {
+      MyLog.e("get file info succeed, the size of file is " + stat.size);
     }).catch(function (err) {
-      console.info("get file info failed with error message: " + err.message + ", error code: " + err.code);
+      MyLog.e ("get file info failed with error message: " + err.message + ", error code: " + err.code);
     });
-
 
 
     let breedid = router.getParams()?.['breedid']
 
-    MyLog.e("this.breedid : " + breedid)
+    // MyLog.e("this.breedid : " + breedid)
 
     catVm.searchCatsPromise(breedid).then((response: AxiosResponse) => {
       let result: Array<CatData> = response.data
 
-      this.catSource.setData(result)
+      for (let i = 0; i < result.length; i++) {
+        let item = result[i]
+        let fPath = this.cacheDir + "/" + item.id + ".jpg"
+        try {
+          let res = fs.accessSync(fPath)
 
-      // this.dataSource.pushData(result)
-      // if (data.success) {
-      //
-      // } else {
-      //   // resolve(Const.TabBars_DEFAULT_NEWS_TYPES);
-      // }
-      for (let resultElement of result) {
-        this.startTask(resultElement)
+          if (res) {
+            let uri = fileUri.getUriFromPath(fPath); // file://<packageName>/data/storage/el2/base/haps/entry/files/test
+            // MyLog.e("file exists  : " + uri);
+            item.fileUri = uri
+          } else {
+            // MyLog.e("file not exists");
+            this.startTask(item, fPath, i)
+          }
+        } catch (error) {
+          // @ts-ignore
+          let err: BusinessError = error as BusinessError;
+          MyLog.e("accessSync failed with error message: " + err.message + ", error code: " + err.code);
+        }
+
+
       }
 
+      this.catSource.setData(result)
 
       this.success = true
     })
       .catch((error: AxiosError) => {
-        MyLog.e("result:" + error.message);
+        // MyLog.e("result:" + error.message);
         this.success = false
       })
       .then(() => {

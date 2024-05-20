@@ -13,7 +13,7 @@ export class AxiosUtils {
   constructor() {
     this.instance = this.getInstance()
     this.instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-      MyLog.e("request   url: " + config.baseURL + config.url);
+      // MyLog.e("request   url: " + config.baseURL + config.url);
 
       // 对请求数据做点什么
       return config;

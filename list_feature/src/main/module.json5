@@ -18,6 +18,7 @@
         "description": "$string:ability_desc",
         "icon": "$media:icon",
         "label": "$string:ability_label",
+        "launchType" : "singleton",
         "startWindowIcon": "$media:startIcon",
         "startWindowBackground": "$color:start_window_background",
         "exported": true
